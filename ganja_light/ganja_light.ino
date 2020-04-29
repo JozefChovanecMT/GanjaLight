@@ -23,19 +23,19 @@
 
 #define A_MODE_BRIGHT .40 // svietivosť v % za bodkou.
 
-#define PWM_OUT_PIN 8 // pin na riadenie lediek
+#define PWM_OUT_PIN 5 // pin na riadenie lediek
 
-#define STATUS_LED_PIN 3 // pin na riadenie status žiarovky
+#define STATUS_LED_PIN 6 // pin na riadenie status žiarovky
 #define STATUS_LED_A_MODE analogWrite(STATUS_LED_PIN, (255 * A_MODE_BRIGHT))
 #define STATUS_LED_B_MODE digitalWrite(STATUS_LED_PIN, 255)
 #define STATUS_LED_OFF_MODE analogWrite(STATUS_LED_PIN, 0)
 
-#define SWITCHPOS_A_PIN 11 // pin na pozíciu A
-#define SWITCHPOS_B_PIN 12 // pin na pozíciu B
+#define SWITCHPOS_A_PIN 3 // pin na pozíciu A
+#define SWITCHPOS_B_PIN 4 // pin na pozíciu B
 #define READ_SWITCHPOS_A digitalRead(SWITCHPOS_A_PIN)
 #define READ_SWITCHPOS_B digitalRead(SWITCHPOS_B_PIN)
 
-#define STROBESWITCH_IN_PIN 10 // pin na spínač stroboskopu
+#define STROBESWITCH_IN_PIN 2 // pin na spínač stroboskopu
 #define READ_STROBESWITCH digitalRead(STROBESWITCH_IN_PIN)
 
 #define A_MODE analogWrite(PWM_OUT_PIN, (255 * A_MODE_BRIGHT))
