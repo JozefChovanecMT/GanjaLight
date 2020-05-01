@@ -45,7 +45,6 @@
 #define WORKING_DELAY 600 // delay čítania zmien, pracovný delay
 
 byte switch_state = 0;
-byte last_switch_state = 0;
 
 void setup() {
   pinMode(PWM_OUT_PIN, OUTPUT);
@@ -59,9 +58,6 @@ void loop() {
   READ_SWITCHPOS_A;
   READ_SWITCHPOS_B;
   READ_STROBESWITCH;
-
-  if (READ_STROBESWITCH == HIGH) switch_state = 1;
-  else switch_state = 0;
   
   while (READ_SWITCHPOS_A == HIGH && READ_STROBESWITCH == LOW) {
     STATUS_LED_OFF_MODE;
@@ -78,23 +74,22 @@ void loop() {
     OFF_MODE;
   }
 
-  if (switch_state != last_switch_state){
-    last_switch_state = switch_state;
-    switch(switch_state){
-    case 1:
+  if (READ_STROBESWITCH == HIGH){
+      if (switch_state == 0) {
+      switch_state = 1;
+      }
+      else {
+      switch_state = 0;
+      }
+  }
     
-    while (1) {
+  while (switch_state == 1) {
     B_MODE;
     STATUS_LED_ON_MODE;
     delay(FLASH_DELAY);
     OFF_MODE;
     STATUS_LED_OFF_MODE;
     delay(FLASH_DELAY);
-  }
-  
-    case 0:
-      break;
-    }
   }
   
   delay(WORKING_DELAY);
