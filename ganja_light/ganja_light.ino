@@ -21,24 +21,26 @@
 //  0. You just DO WHAT THE FUCK YOU WANT TO.                                   
 //
 
-#define PWM_OUT_PIN 5 // pin na riadenie lediek
+#define A_MODE_BRIGHT .40 // svietivosť v % za bodkou.
 
-#define STATUS_LED_PIN 6 // pin na riadenie status žiarovky
-#define STATUS_LED_A_MODE digitalWrite(STATUS_LED_PIN, 102)
+#define PWM_OUT_PIN 8 // pin na riadenie lediek
+
+#define STATUS_LED_PIN 3 // pin na riadenie status žiarovky
+#define STATUS_LED_A_MODE analogWrite(STATUS_LED_PIN, (255 * A_MODE_BRIGHT))
 #define STATUS_LED_B_MODE digitalWrite(STATUS_LED_PIN, 255)
-#define STATUS_LED_OFF_MODE digitalWrite(STATUS_LED_PIN, 0)
+#define STATUS_LED_OFF_MODE analogWrite(STATUS_LED_PIN, 0)
 
-#define SWITCHPOS_A_PIN 3 // pin na pozíciu A
-#define SWITCHPOS_B_PIN 4 // pin na pozíciu B
+#define SWITCHPOS_A_PIN 11 // pin na pozíciu A
+#define SWITCHPOS_B_PIN 12 // pin na pozíciu B
 #define READ_SWITCHPOS_A digitalRead(SWITCHPOS_A_PIN)
 #define READ_SWITCHPOS_B digitalRead(SWITCHPOS_B_PIN)
 
-#define STROBESWITCH_IN_PIN 2 // pin na spínač stroboskopu
+#define STROBESWITCH_IN_PIN 10 // pin na spínač stroboskopu
 #define READ_STROBESWITCH digitalRead(STROBESWITCH_IN_PIN)
 
-#define A_MODE digitalWrite(PWM_OUT_PIN, 102)
+#define A_MODE analogWrite(PWM_OUT_PIN, (255 * A_MODE_BRIGHT))
 #define B_MODE digitalWrite(PWM_OUT_PIN, 255)
-#define OFF_MODE digitalWrite(PWM_OUT_PIN, 0)
+#define OFF_MODE analogWrite(PWM_OUT_PIN, 0)
 
 #define FLASH_DELAY 50 // delay blikania stroboskopu
 #define WORKING_DELAY 600 // delay čítania zmien, pracovný delay
@@ -53,8 +55,8 @@ void setup() {
   pinMode(SWITCHPOS_B_PIN, INPUT);
   pinMode(STROBESWITCH_IN_PIN, INPUT);
 
-  digitalWrite(PWM_OUT_PIN, 0);
-  digitalWrite(STATUS_LED_PIN, 0);
+  analogWrite(PWM_OUT_PIN, 0);
+  analogWrite(STATUS_LED_PIN, 0);
 }
 
 void loop() {
@@ -70,14 +72,15 @@ void loop() {
     OFF_MODE;
     delay(FLASH_DELAY);
   }
+  
+  while (READ_SWITCHPOS_A == HIGH) {
+    STATUS_LED_A_MODE;
+    A_MODE;
+  }
 
   if (switch_state != last_switch_state){
     last_switch_state = switch_state;
     switch(switch_state){
-    case 1:
-      STATUS_LED_A_MODE;
-      A_MODE;
-      break;
     case 2:
       STATUS_LED_B_MODE;
       B_MODE;
