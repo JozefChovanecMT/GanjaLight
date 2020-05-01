@@ -26,9 +26,9 @@
 #define PWM_OUT_PIN 5 // pin na riadenie lediek
 
 #define STATUS_LED_PIN 6 // pin na riadenie status žiarovky
-#define STATUS_LED_A_MODE analogWrite(STATUS_LED_PIN, (255 * A_MODE_BRIGHT))
+#define STATUS_LED_A_MODE digitalWrite(STATUS_LED_PIN, (255 * A_MODE_BRIGHT))
 #define STATUS_LED_B_MODE digitalWrite(STATUS_LED_PIN, 255)
-#define STATUS_LED_OFF_MODE analogWrite(STATUS_LED_PIN, 0)
+#define STATUS_LED_OFF_MODE digitalWrite(STATUS_LED_PIN, 0)
 
 #define SWITCHPOS_A_PIN 3 // pin na pozíciu A
 #define SWITCHPOS_B_PIN 4 // pin na pozíciu B
@@ -38,9 +38,9 @@
 #define STROBESWITCH_IN_PIN 2 // pin na spínač stroboskopu
 #define READ_STROBESWITCH digitalRead(STROBESWITCH_IN_PIN)
 
-#define A_MODE analogWrite(PWM_OUT_PIN, (255 * A_MODE_BRIGHT))
+#define A_MODE digitalWrite(PWM_OUT_PIN, (255 * A_MODE_BRIGHT))
 #define B_MODE digitalWrite(PWM_OUT_PIN, 255)
-#define OFF_MODE analogWrite(PWM_OUT_PIN, 0)
+#define OFF_MODE digitalWrite(PWM_OUT_PIN, 0)
 
 #define FLASH_DELAY 50 // delay blikania stroboskopu
 #define WORKING_DELAY 600 // delay čítania zmien, pracovný delay
@@ -55,8 +55,8 @@ void setup() {
   pinMode(SWITCHPOS_B_PIN, INPUT);
   pinMode(STROBESWITCH_IN_PIN, INPUT);
 
-  analogWrite(PWM_OUT_PIN, 0);
-  analogWrite(STATUS_LED_PIN, 0);
+  digitalWrite(PWM_OUT_PIN, 0);
+  digitalWrite(STATUS_LED_PIN, 0);
 }
 
 void loop() {
