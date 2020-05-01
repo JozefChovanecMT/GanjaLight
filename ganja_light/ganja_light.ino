@@ -26,8 +26,7 @@
 #define PWM_OUT_PIN 5 // pin na riadenie lediek
 
 #define STATUS_LED_PIN 6 // pin na riadenie status žiarovky
-#define STATUS_LED_A_MODE analogWrite(STATUS_LED_PIN, (255 * A_MODE_BRIGHT))
-#define STATUS_LED_B_MODE digitalWrite(STATUS_LED_PIN, 255)
+#define STATUS_LED_ON_MODE digitalWrite(STATUS_LED_PIN, 255)
 #define STATUS_LED_OFF_MODE analogWrite(STATUS_LED_PIN, 0)
 
 #define SWITCHPOS_A_PIN 3 // pin na pozíciu A
@@ -45,42 +44,32 @@
 #define FLASH_DELAY 50 // delay blikania stroboskopu
 #define WORKING_DELAY 600 // delay čítania zmien, pracovný delay
 
+byte switch_state = 0;
+byte last_switch_state = 0;
+
 void setup() {
   pinMode(PWM_OUT_PIN, OUTPUT);
   pinMode(STATUS_LED_PIN, OUTPUT);
   pinMode(SWITCHPOS_A_PIN, INPUT);
   pinMode(SWITCHPOS_B_PIN, INPUT);
   pinMode(STROBESWITCH_IN_PIN, INPUT);
-
-  analogWrite(PWM_OUT_PIN, 0);
-  analogWrite(STATUS_LED_PIN, 0);
-
-  READ_SWITCHPOS_A;
-  READ_SWITCHPOS_B;
-  READ_STROBESWITCH;
 }
 
 void loop() {
   READ_SWITCHPOS_A;
   READ_SWITCHPOS_B;
   READ_STROBESWITCH;
+
+  if (READ_STROBESWITCH == HIGH) switch_state = 1;
+  else switch_state = 0;
   
-  while (READ_STROBESWITCH == HIGH) {
-    STATUS_LED_B_MODE;
-    B_MODE;
-    delay(FLASH_DELAY);
+  while (READ_SWITCHPOS_A == HIGH && READ_STROBESWITCH == LOW) {
     STATUS_LED_OFF_MODE;
-    OFF_MODE;
-    delay(FLASH_DELAY);
-  }
-  
-  while (READ_SWITCHPOS_A == HIGH) {
-    STATUS_LED_A_MODE;
     A_MODE;
   }
 
-  while (READ_SWITCHPOS_B == HIGH) {
-    STATUS_LED_B_MODE;
+  while (READ_SWITCHPOS_B == HIGH && READ_STROBESWITCH == LOW) {
+    STATUS_LED_ON_MODE;
     B_MODE;
   }
 
@@ -88,5 +77,25 @@ void loop() {
     STATUS_LED_OFF_MODE;     
     OFF_MODE;
   }
+
+  if (switch_state != last_switch_state){
+    last_switch_state = switch_state;
+    switch(switch_state){
+    case 1:
+    
+    while (1) {
+    B_MODE;
+    STATUS_LED_ON_MODE;
+    delay(FLASH_DELAY);
+    OFF_MODE;
+    STATUS_LED_OFF_MODE;
+    delay(FLASH_DELAY);
+  }
+  
+    case 0:
+      break;
+    }
+  }
+  
   delay(WORKING_DELAY);
 }
