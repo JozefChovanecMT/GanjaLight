@@ -93,8 +93,15 @@ void loop() {
     OFF_MODE;
     STATUS_LED_OFF_MODE;
     delay(FLASH_DELAY);
-    break;
+    if (READ_STROBESWITCH == HIGH && millis() - cas > dostlacenie) {
+    if (switch_state == 1) {
+      switch_state = 0;
+    } else {
+      switch_state = 1;
+    }
+    cas = millis();
   }
+}
   
   delay(WORKING_DELAY);
 }
