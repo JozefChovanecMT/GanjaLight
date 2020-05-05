@@ -41,7 +41,6 @@
 #define B_MODE digitalWrite(PWM_OUT_PIN, 255)
 #define OFF_MODE analogWrite(PWM_OUT_PIN, 0)
 
-#define FLASH_DELAY 50 // delay blikania stroboskopu
 #define WORKING_DELAY 600 // delay čítania zmien, pracovný delay
 
 int switch_state = 0;
@@ -87,6 +86,12 @@ void loop() {
   }
 
   while (switch_state == 1) {
+    B_MODE;
+    STATUS_LED_ON_MODE;
+    delay(80);
+    OFF_MODE;
+    STATUS_LED_OFF_MODE;
+    delay(80);
     B_MODE;
     STATUS_LED_ON_MODE;
     delay(80);
