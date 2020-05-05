@@ -93,6 +93,7 @@ void loop() {
     OFF_MODE;
     STATUS_LED_OFF_MODE;
     delay(FLASH_DELAY);
+    break;
   }
   
   delay(WORKING_DELAY);
