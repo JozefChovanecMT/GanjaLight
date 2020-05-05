@@ -47,7 +47,7 @@
 int switch_state = 0;
 int predosly_stav = 0;
 long cas = 0;
-long dostlacenie = 200;
+long dostlacenie = 1000;
 
 void setup() {
   pinMode(PWM_OUT_PIN, OUTPUT);
