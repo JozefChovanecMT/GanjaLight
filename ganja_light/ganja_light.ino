@@ -37,7 +37,7 @@
 #define STROBESWITCH_IN_PIN 2 // pin na spínač stroboskopu
 #define READ_STROBESWITCH digitalRead(STROBESWITCH_IN_PIN)
 
-#define A_MODE analogWrite(PWM_OUT_PIN, (255 * A_MODE_BRIGHT))
+#define A_MODE digitalWrite(PWM_OUT_PIN, (255 * A_MODE_BRIGHT))
 #define B_MODE digitalWrite(PWM_OUT_PIN, 255)
 #define OFF_MODE analogWrite(PWM_OUT_PIN, 0)
 
