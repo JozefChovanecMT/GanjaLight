@@ -89,10 +89,22 @@ void loop() {
   while (switch_state == 1) {
     B_MODE;
     STATUS_LED_ON_MODE;
-    delay(FLASH_DELAY);
+    delay(80);
     OFF_MODE;
     STATUS_LED_OFF_MODE;
-    delay(FLASH_DELAY);
+    delay(80);
+    B_MODE;
+    STATUS_LED_ON_MODE;
+    delay(80);
+    OFF_MODE;
+    STATUS_LED_OFF_MODE;
+    delay(300);
+    B_MODE;
+    STATUS_LED_ON_MODE;
+    delay(600);
+    OFF_MODE;
+    STATUS_LED_OFF_MODE;
+    delay(80);
     if (READ_STROBESWITCH == HIGH && millis() - cas > dostlacenie) {
     if (switch_state == 1) {
       switch_state = 0;
