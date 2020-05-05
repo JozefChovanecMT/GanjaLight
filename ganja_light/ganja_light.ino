@@ -44,7 +44,10 @@
 #define FLASH_DELAY 50 // delay blikania stroboskopu
 #define WORKING_DELAY 600 // delay čítania zmien, pracovný delay
 
-byte switch_state = 0;
+int switch_state = 0;
+int predosly_stav = 0;
+long cas = 0;
+long dostlacenie = 200;
 
 void setup() {
   pinMode(PWM_OUT_PIN, OUTPUT);
@@ -59,10 +62,13 @@ void loop() {
   READ_SWITCHPOS_B;
   READ_STROBESWITCH;
 
-  if (READ_STROBESWITCH == HIGH) {
-    delay(500);
-    switch_state = 1;
-    delay(500);
+  if (READ_STROBESWITCH == HIGH && millis() - cas > dostlacenie) {
+    if (switch_state == 1) {
+      switch_state = 0;
+    } else {
+      switch_state = 1;
+    }
+    cas = millis();
   }
   
   while (READ_SWITCHPOS_A == HIGH && READ_STROBESWITCH == LOW) {
@@ -81,7 +87,6 @@ void loop() {
   }
 
   while (switch_state == 1) {
-    if (READ_STROBESWITCH == HIGH) switch_state = 0;
     B_MODE;
     STATUS_LED_ON_MODE;
     delay(FLASH_DELAY);
