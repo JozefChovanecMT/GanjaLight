@@ -59,7 +59,11 @@ void loop() {
   READ_SWITCHPOS_B;
   READ_STROBESWITCH;
 
-  if (READ_STROBESWITCH == HIGH) switch_state = 1;
+  if (READ_STROBESWITCH == HIGH) {
+    delay(500)
+    switch_state = 1;
+    delay(500)
+  }
   
   while (READ_SWITCHPOS_A == HIGH && READ_STROBESWITCH == LOW) {
     STATUS_LED_OFF_MODE;
