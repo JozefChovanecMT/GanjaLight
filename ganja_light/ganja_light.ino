@@ -60,9 +60,9 @@ void loop() {
   READ_STROBESWITCH;
 
   if (READ_STROBESWITCH == HIGH) {
-    delay(500)
+    delay(500);
     switch_state = 1;
-    delay(500)
+    delay(500);
   }
   
   while (READ_SWITCHPOS_A == HIGH && READ_STROBESWITCH == LOW) {
