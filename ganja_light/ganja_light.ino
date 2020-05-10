@@ -21,7 +21,7 @@
 //  0. You just DO WHAT THE FUCK YOU WANT TO.                                   
 //
 
-#define A_MODE_BRIGHT .53 // svietivosť v % za bodkou.
+#define A_MODE_BRIGHT .52 // svietivosť v % za bodkou.
 
 #define PWM_OUT_PIN 5 // pin na riadenie lediek
 
